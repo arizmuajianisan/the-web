@@ -19,7 +19,6 @@ import { pluginCollapsibleSections } from '@expressive-code/plugin-collapsible-s
 import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
 
 import tailwindcss from "@tailwindcss/vite";
-import vercel from '@astrojs/vercel';
 
 import cloudflare from '@astrojs/cloudflare';
 
@@ -130,5 +129,7 @@ export default defineConfig({
     remarkPlugins: [remarkMath, remarkEmoji, remarkSectionize],
   },
 
-  adapter: cloudflare()
+  adapter: cloudflare({
+    imageService: "compile",
+  })
 })

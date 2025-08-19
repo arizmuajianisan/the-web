@@ -9,6 +9,13 @@ const BlogCardJSX = ({ entry }: { entry: CollectionEntry<'blog'> }) => {
         href={`/${entry.collection}/${entry.id}`}
         className="flex flex-col gap-4 sm:flex-row"
       >
+        {entry.data.image && (
+          <img 
+            src={entry.data.image.src} 
+            alt={entry.data.title}
+            className="w-full sm:w-48 h-32 object-cover rounded-lg"
+          />
+        )}
         <div className="grow">
           <h3 className="mb-1 text-lg font-medium">{entry.data.title}</h3>
           <p className="text-muted-foreground mb-2 text-sm">

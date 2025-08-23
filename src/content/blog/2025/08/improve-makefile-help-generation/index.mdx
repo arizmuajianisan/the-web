@@ -1,0 +1,82 @@
+---
+title: "Improve Makefile Help Generation"
+description: "Improve Makefile Help Generation"
+date: 2025-08-23
+image: "../../../../../../public/static/blog/improve-makefile-help-generation/improve-makefile-help-generation.png"
+tags:
+  - "makefile"
+  - "help"
+  - "documentation"
+authors:
+  - "arizmuajianisan"
+slug: "improve-makefile-help-generation"
+---
+
+# Story
+
+I feel exhausted when I have to update the makefile then I have to update the help section of the makefile - It is wasting my time.
+Then I found an interesting way to help me trough this. I will share how to do it for you!
+
+## Solution
+
+This is very straightforward. The point is using grep! Yes, it is! Makefile is a shell script, so we can use grep to get the help section.
+
+You can just use this:
+
+```makefile
+help:
+	@grep -E '^\.PHONY: [a-zA-Z_-]+ .*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = "(: |##)"}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+```
+
+What it does:
+- `grep -E "^[a-zA-Z0-9_-]+:.*?## .*$$" $(MAKEFILE_LIST)`: This command searches for lines in the Makefile that start with a target name (e.g., `build:`), followed by a space, then a `##` symbol, and finally a description of the target. The `$(MAKEFILE_LIST)` variable is used to get the list of Makefiles being processed.
+- `sort`: Sorts the lines alphabetically.
+- `awk 'BEGIN {FS = ":.*?## "; RS = "\n"} {printf "  %-30s %s\n", $$1, $$2}'`: This command uses `awk` to format the output. It sets the field separator to `:.*?## ` (to extract the target name) and the record separator to `\n` (to process each line separately). It then prints the target name left-justified in a 30-character field, followed by the description.
+
+How to apply this:
+
+```makefile
+some-action: do-action ## Some action description
+```
+
+The grep will check the makefile and find the line that starts with `some-action` and has a `##` symbol, then it will print the line.
+
+Voila! 🐱‍🏍 The help section will be automatically generated.
+
+## Example
+
+<script src="https://asciinema.org/a/735273.js" id="asciicast-735273" async="true"></script>
+
+## Bonus: Coloring the output
+
+To improve the readability of the output, you can add this:
+
+```makefile
+# Colors
+GREEN  := $(shell tput -Txterm setaf 2)
+YELLOW := $(shell tput -Txterm setaf 3)
+RED    := $(shell tput -Txterm setaf 1)
+BLUE   := $(shell tput -Txterm setaf 4)
+RESET  := $(shell tput -Txterm sgr0)
+BOLD   := $(shell tput bold)
+```
+
+And then use it like this:
+
+```makefile
+dev-run: stop-containers
+        @echo "${YELLOW}${BOLD}==> Building development images...${RESET}"
+```
+
+Here is the sample:
+
+<script src="https://asciinema.org/a/735275.js" id="asciicast-735275" async="true"></script>
+
+## Conclusion
+
+You dont need to update the makefile then update the help section of the makefile - It is wasting your time.
+Hope you find this helpful!
+
+## Resources
+
+- [Makefile](https://www.gnu.org/software/make/make.html)

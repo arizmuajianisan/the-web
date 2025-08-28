@@ -36,7 +36,7 @@ export const POST: APIRoute = async ({ params, request }) => {
   // SECURITY CHECK: Validate origin/referer to prevent CSRF attacks
   const origin = request.headers.get('origin');
   const allowedOrigins = [
-    'https://arizmuajianisan.my.id',  // Replace with your actual domain
+    'https://arzlabserver.my.id/',  // Replace with your actual domain
     'http://localhost:3010',   // For local development
     'http://169.254.195.50:3010', // Local development
   ];

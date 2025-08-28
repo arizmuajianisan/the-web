@@ -1,0 +1,21 @@
+# Wrangler configuration file
+# Generated from wrangler.jsonc
+
+name = "the-web"
+compatibility_date = "2025-08-16"
+
+[assets]
+directory = "./dist"
+not_found_handling = "404-page"
+
+[vars]
+NEON_DATABASE_URL = "${NEON_DATABASE_URL}"
+
+[observability.logs]
+enabled = true
+
+[env.development.vars]
+NEON_DATABASE_URL = "${NEON_DATABASE_URL}"
+
+[env.production.vars]
+NEON_DATABASE_URL = "${NEON_DATABASE_URL}"

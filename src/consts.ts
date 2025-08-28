@@ -31,16 +31,12 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'GitHub',
   },
   {
+    href: 'https://linkedin.com/in/arizmuajianisan',
+    label: 'LinkedIn',
+  },
+  {
     href: 'mailto:contact@arizmuajianisan@gmail.com',
     label: 'Email',
-  },
-  // {
-  //   href: '+62 812 8666 6666',
-  //   label: 'Phone',
-  // },
-  {
-    href: 'https://www.instagram.com/arizmuajianisan?ref=personal-website',
-    label: 'Instagram',
   },
   {
     href: '/rss.xml',
@@ -51,8 +47,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
 export const ICON_MAP: IconMap = {
   Website: 'lucide:globe',
   GitHub: 'lucide:github',
-  Instagram: 'lucide:instagram',
-  Phone: 'lucide:phone',
+  LinkedIn: 'lucide:linkedin',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
 }

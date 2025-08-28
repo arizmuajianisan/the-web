@@ -2,7 +2,7 @@
 title: "Building a Robust Git Workflow: From Commit to Release"
 description: "Learn how to automate your Git workflow with commit validation, automated versioning, and changelog generation using our open-source Git Workflow Initializer."
 date: 2025-08-18
-updatedDate: 2025-08-23
+updatedDate: 2025-08-28
 tags:
   - "git"
   - "workflow"
@@ -14,16 +14,8 @@ authors:
   - "arizmuajianisan"
 slug: "building-robust-git-workflow"
 ---
-{/* 
-<div className="w-full h-64 md:h-96 overflow-hidden rounded-lg mb-6">
-  <img 
-    src="../../../../../public/static/blog/building-robust-git-workflow/building-robust-git-workflow.webp" 
-    alt="Building Robust Git Workflow" 
-    className="w-full h-full object-cover"
-  />
-</div> */}
 
-# The Genesis
+# Introduction
 
 Every developer knows the importance of a good Git workflow, but setting one up can be time-consuming and error-prone. That's why I created the Git Workflow Initializer - a set of scripts and configurations that automate the process of setting up a professional Git workflow for any project.
 
@@ -48,20 +40,6 @@ Perfect for small to medium projects, this setup includes:
 - 🐶 **Git Hooks** with Husky
 - 🔒 **GitHub Releases** integration
 
-## Key Features in Depth
-
-### Commit Message Validation
-Using commitlint with the conventional commits specification, we ensure every commit message follows a consistent format. This makes the commit history more readable and enables automated versioning.
-
-### Automated Versioning & Changelogs
-By analyzing commit messages, the system can automatically determine the next version number (major, minor, or patch) and generate detailed changelogs. This eliminates human error in version management.
-
-### Git Hooks with Husky
-Pre-commit and commit-msg hooks ensure code quality and commit message standards are maintained before changes are committed to the repository.
-
-### CI/CD Integration
-The workflow includes GitHub Actions configuration for automated testing and deployment, ensuring code quality and consistency across the team.
-
 ## Technical Implementation
 
 The project leverages several powerful tools:
@@ -74,7 +52,7 @@ The project leverages several powerful tools:
 
 ## Getting Started
 
-Setting up the workflow is straightforward:
+I will show you how to set it up. I consider you already have a git repository. First you need to install the dependencies. Just grab the script and run it:
 
 ```bash
 curl -O https://raw.githubusercontent.com/arizmuajianisan/git-workflow-init/main/scripts/setup-git-simple.sh
@@ -82,10 +60,58 @@ chmod +x setup-git-simple.sh
 ./setup-git-simple.sh
 ```
 
+After the installation completed, you need to add your github token to the .env file. You can get it from your github account.
+
+You can start commiting your changes. The commit message will be validated by commitlint. If the commit message is not valid, it will not allow you to commit.
+
+The rule for this commit is:
+
+```bash
+(type)(scope): subject -> Sentence case, imperative verb, no period at the end
+```
+
+## Example
+
+Add new feature:
+
+```bash
+git commit -m "feat(user): Add login feature"
+```
+
+It will create a new version and update the changelog, i.e. `0.1.0` to `0.2.0`.
+
+To add major change, you need to use the following format:
+
+```bash
+git commit -m "feat(user): Add login feature" -m "BREAKING CHANGE: Add login feature"
+```
+
+It will create a new version and update the changelog, i.e. `0.1.0` to `1.0.0`.
+
+Example of invalid commit message:
+
+```bash
+git commit -m "feat(user): add login feature"
+```
+
+## Types
+
+| **Type** | **Description**                                                                                             |
+| -------- | ----------------------------------------------------------------------------------------------------------- |
+| build    | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)         |
+| chore    | Changes to the build process or auxiliary tools and libraries such as documentation generation              |
+| ci       | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| docs     | Documentation changes                                                                                       |
+| feat     | A new feature                                                                                               |
+| fix      | A bug fix                                                                                                   |
+| perf     | A code change that improves performance                                                                     |
+| refactor | A code change that neither fixes a bug or adds a feature                                                    |
+| style    | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)      |
+| test     | Adding missing tests or correcting existing tests                                                           |
+
 ## Sample Usage
 
-<script src="https://asciinema.org/a/734366.js" id="asciicast-734366" async="true"></script>
-
+<script src="https://asciinema.org/a/736131.js" id="asciicast-736131" async="true"></script>
 
 ## The Impact
 
@@ -95,14 +121,6 @@ Since implementing this workflow, I've noticed:
 - Automated changelog generation
 - Improved code quality through automated checks
 - Faster release cycles
-
-## Future Enhancements
-
-Some planned improvements include:
-- Support for more CI/CD platforms
-- Additional pre-configured linter rules
-- Integration with more package managers
-- Support for more monorepo tools
 
 ## Conclusion
 

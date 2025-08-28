@@ -91,6 +91,16 @@ const canonicalUrl = new URL(`/blog/${post.id}/`, Astro.site).toString();
           }
         </div>
       </div>
+      {post.data.image && (
+        <div class="w-full my-6 rounded-lg overflow-hidden">
+          <img 
+            src={post.data.image.src}
+            alt={post.data.title}
+            class="w-full h-auto object-cover rounded-lg"
+            loading="lazy"
+          />
+        </div>
+      )}
     </section>
 
     <div
